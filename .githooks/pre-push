@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# Pre-push local build/test gate for mobsocial.
+# Per local clone: git config --local core.hooksPath .githooks
+set -Eeuo pipefail
+cd "$(git rev-parse --show-toplevel)"
+echo "[local-gate] mobsocial: checking before push..."
+if git rev-parse HEAD^ >/dev/null 2>&1; then git diff --check HEAD^ HEAD; fi
+echo '[local-gate] Legacy repository: no tested build entrypoint identified; only git diff check verified.'
+echo "[local-gate] mobsocial: PASS (only for checks actually executed)."
